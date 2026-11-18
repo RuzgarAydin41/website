@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ruzgar Aydin – Missed-call text-back for plumbers</title>
+<meta name="description" content="When you miss a call, the caller gets your text within 60 seconds. 14 days free, then $99/month.">
+<style>
+  :root {
+    --ink: #17212b; --muted: #5b6672; --line: #e3e0d8; --paper: #faf8f3;
+    --card: #ffffff; --accent: #e8590c; --accent-dark: #c2410c; --navy: #1d3557;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font: 17px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  main { max-width: 640px; margin: 0 auto; padding: 32px 20px 56px; }
+  header { display: flex; gap: 16px; align-items: center; margin-bottom: 28px; }
+  .avatar {
+    flex: none; width: 72px; height: 72px; border-radius: 50%; object-fit: cover;
+    background: var(--navy); border: 3px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.15);
+  }
+  header h1 { font-size: 20px; margin: 0; }
+  header p { margin: 2px 0 0; color: var(--muted); font-size: 15px; }
+  .hero h2 { font-size: 30px; line-height: 1.2; margin: 0 0 12px; letter-spacing: -0.5px; }
+  .hero p { margin: 0; color: var(--muted); }
+  section { margin-top: 40px; }
+  h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--muted); margin: 0 0 14px; }
+  ol.steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  ol.steps li {
+    display: flex; gap: 14px; align-items: flex-start; background: var(--card);
+    border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px;
+  }
+  ol.steps .n {
+    flex: none; width: 28px; height: 28px; border-radius: 50%; background: #fdebe1;
+    color: var(--accent-dark); font-weight: 700; display: grid; place-items: center; font-size: 15px;
+  }
+  .sms {
+    margin-top: 12px; background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 14px 16px; font-size: 15px; color: var(--muted);
+  }
+  .bubble {
+    display: inline-block; margin-top: 6px; background: #e9eef6; color: var(--ink);
+    border-radius: 16px 16px 16px 4px; padding: 10px 14px; max-width: 90%;
+  }
+  .calc { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
+  .calc label { display: block; font-weight: 600; font-size: 15px; margin: 0 0 6px; }
+  .field { margin-bottom: 16px; }
+  .input-wrap { display: flex; align-items: center; border: 1px solid #cfcac0; border-radius: 10px; background: #fff; }
+  .input-wrap:focus-within { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(29,53,87,.12); }
+  .input-wrap span { padding: 0 0 0 12px; color: var(--muted); }
+  .input-wrap span.after { padding: 0 12px 0 0; }
+  .calc input {
+    flex: 1; min-width: 0; border: 0; background: transparent; font: inherit; font-size: 18px;
+    padding: 11px 12px; color: var(--ink); outline: none;
+  }
+  .result { border-top: 1px dashed var(--line); margin-top: 4px; padding-top: 16px; }
+  .result .label { color: var(--muted); font-size: 15px; }
+  .result .big { font-size: 40px; font-weight: 800; letter-spacing: -1px; color: var(--accent-dark); line-height: 1.1; }
+  .result .cover { margin-top: 6px; font-weight: 600; }
+  .note { font-size: 13px; color: var(--muted); margin-top: 10px; }
+  .offer {
+    background: var(--navy); color: #fff; border-radius: 16px; padding: 22px 20px;
+  }
+  .offer .price { font-size: 26px; font-weight: 800; margin: 0 0 4px; }
+  .offer ul { margin: 10px 0 18px; padding-left: 20px; color: #d6deea; }
+  .offer ul li { margin: 4px 0; }
+  .btn {
+    display: block; text-align: center; background: var(--accent); color: #fff; text-decoration: none;
+    font-weight: 700; font-size: 18px; padding: 15px 18px; border-radius: 12px;
+  }
+  .btn:hover, .btn:focus { background: var(--accent-dark); }
+  .btn-sub { text-align: center; font-size: 14px; color: #d6deea; margin-top: 10px; }
+  .btn-sub a { color: #fff; }
+  footer { margin-top: 36px; font-size: 13px; color: var(--muted); text-align: center; }
+  @media (max-width: 420px) { .hero h2 { font-size: 26px; } .result .big { font-size: 34px; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img class="avatar" src="data:image/jpeg;base64,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" alt="Ruzgar Aydin" width="72" height="72">
+    <div>
+      <h1>Ruzgar Aydin</h1>
+      <p>I set up missed-call text-back for small plumbing businesses.</p>
+    </div>
+  </header>
+
+  <div class="hero">
+    <h2>When you can't pick up, the caller still hears from you.</h2>
+    <p>You're under a sink or on the road and the phone rings. Plenty of callers won't leave a voicemail. They just call the next plumber on the list. A quick text gives them a reason to wait for you.</p>
+  </div>
+
+  <section>
+    <h3>How it works</h3>
+    <ol class="steps">
+      <li><span class="n">1</span><div>A call to your business number goes unanswered.</div></li>
+      <li><span class="n">2</span><div>Within 60 seconds, the caller gets a text from your business.</div></li>
+      <li><span class="n">3</span><div>They reply with what they need, and you answer when you're free, so they're less likely to move on to someone else.</div></li>
+    </ol>
+    <div class="sms">Example text (you choose the wording):<br>
+      <span class="bubble">Hi, this is Mike's Plumbing. Sorry we missed your call! What do you need help with? We'll get right back to you.</span>
+    </div>
+  </section>
+
+  <section>
+    <h3>What missed calls cost you</h3>
+    <div class="calc">
+      <div class="field">
+        <label for="calls">Calls you miss in a typical week</label>
+        <div class="input-wrap"><input id="calls" type="number" inputmode="numeric" min="0" step="1" value="5"></div>
+      </div>
+      <div class="field">
+        <label for="job">Your average job is worth</label>
+        <div class="input-wrap"><span>$</span><input id="job" type="number" inputmode="numeric" min="0" step="10" value="300"></div>
+      </div>
+      <div class="field">
+        <label for="booking">Share of those callers who would have booked</label>
+        <div class="input-wrap"><input id="booking" type="number" inputmode="numeric" min="0" max="100" step="5" value="50"><span class="after">%</span></div>
+      </div>
+      <div class="result" aria-live="polite">
+        <div class="label">Work you could be losing each month</div>
+        <div class="big" id="loss">$3,248</div>
+        <div class="cover" id="cover">Winning back 1 job a month pays for the whole service.</div>
+        <p class="note">These are your own estimates, not mine. Change any number and the result updates.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="offer">
+      <p class="price">Try it free for 14 days</p>
+      <div>Then $99/month. I handle the setup. US carriers require a one-time carrier registration for your business (usually 1–3 weeks), and your 14 free days start once texts go live.</div>
+      <ul>
+        <li>Customers keep calling the number they already know</li>
+        <li>No contract, cancel anytime</li>
+        <li>You approve the text before anything goes live</li>
+      </ul>
+      <a class="btn" id="email" href="mailto:ruzgar@ruzgaraydin.com">Email me about the free trial</a>
+      <div class="btn-sub">Or write to <a href="mailto:ruzgar@ruzgaraydin.com">ruzgar@ruzgaraydin.com</a></div>
+    </div>
+  </section>
+
+  <footer>Ruzgar Aydin · ruzgar@ruzgaraydin.com</footer>
+</main>
+
+<script>
+// Missed-call calculator logic. No DOM access; tested with node:test.
+const WEEKS_PER_MONTH = 4.33;
+const PRICE = 99;
+const EMAIL = 'ruzgar@ruzgaraydin.com';
+
+function toNumber(value) {
+  const n = Number(value === '' || value == null ? NaN : value);
+  return Number.isFinite(n) && n > 0 ? n : 0;
+}
+
+function monthlyLoss({ callsPerWeek, jobValue, bookingPercent }) {
+  const share = Math.min(toNumber(bookingPercent), 100) / 100;
+  return Math.round(toNumber(callsPerWeek) * share * toNumber(jobValue) * WEEKS_PER_MONTH);
+}
+
+function jobsToCover(jobValue, price = PRICE) {
+  const value = toNumber(jobValue);
+  return value > 0 ? Math.ceil(price / value) : null;
+}
+
+function formatUSD(n) {
+  return '$' + Math.round(toNumber(n)).toLocaleString('en-US');
+}
+
+function mailtoHref(inputs) {
+  const calls = toNumber(inputs.callsPerWeek);
+  const job = toNumber(inputs.jobValue);
+  const booking = Math.min(toNumber(inputs.bookingPercent), 100);
+  const subject = 'Missed calls – quick question';
+  const body =
+    `Hi Ruzgar,\n\n` +
+    `We miss about ${calls} calls a week, an average job is around ${formatUSD(job)}, ` +
+    `and I'd guess ${booking}% of those callers would have booked. ` +
+    `Your calculator says that's roughly ${formatUSD(monthlyLoss(inputs))} a month.\n\n` +
+    `I'd like to hear more about the 14-day free trial.\n`;
+  return `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+if (typeof globalThis !== 'undefined') {
+  globalThis.Calc = { toNumber, monthlyLoss, jobsToCover, formatUSD, mailtoHref };
+}
+
+(function () {
+  var C = globalThis.Calc;
+  var calls = document.getElementById('calls');
+  var job = document.getElementById('job');
+  var booking = document.getElementById('booking');
+  var loss = document.getElementById('loss');
+  var cover = document.getElementById('cover');
+  var email = document.getElementById('email');
+
+  function update() {
+    var inputs = { callsPerWeek: calls.value, jobValue: job.value, bookingPercent: booking.value };
+    loss.textContent = C.formatUSD(C.monthlyLoss(inputs));
+    var n = C.jobsToCover(job.value);
+    cover.hidden = n === null;
+    if (n !== null) {
+      cover.textContent = 'Winning back ' + n + (n === 1 ? ' job' : ' jobs') + ' a month pays for the whole service.';
+    }
+    email.href = C.mailtoHref(inputs);
+  }
+
+  [calls, job, booking].forEach(function (el) { el.addEventListener('input', update); });
+  update();
+})();
+</script>
+</body>
+</html>
